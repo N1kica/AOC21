@@ -21,7 +21,7 @@ where
         .lines()
         .map(|line| line
             .chars()
-            .map(|char| f(char).unwrap())
+            .filter_map(|c| f(c))
             .collect())
         .collect()
     
