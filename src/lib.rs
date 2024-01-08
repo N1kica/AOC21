@@ -24,5 +24,4 @@ where
             .filter_map(|c| f(c))
             .collect())
         .collect()
-    
 }
