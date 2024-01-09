@@ -13,7 +13,6 @@ where
 
 pub fn chars<T, F>(path: &str, f: F) -> Vec<T> 
 where 
-    T: FromStr,
     F: Fn(char) -> Option<T>
 {
     std::fs::read_to_string(path)

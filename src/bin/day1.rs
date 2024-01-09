@@ -7,5 +7,5 @@ fn descending_widnow(size: usize) -> usize {
 
 fn main() {
     println!("Part 1: {}", descending_widnow(2));
-    println!("Part 1: {}", descending_widnow(4));
+    println!("Part 2: {}", descending_widnow(4));
 }
