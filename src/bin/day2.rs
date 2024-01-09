@@ -1,40 +1,22 @@
 use std::str::FromStr;
 
-fn part_one() -> u32 {
+fn get_position(part: usize) -> u32 {
     aoc::lines::<Direction>("./data/day2.txt")
         .iter()
         .fold(Position::new(), |pos, inst| match inst {
             Direction::Forward(dist) => Position {
                 distance: pos.distance + dist,
+                depth: if part == 2 { pos.depth + pos.aim * dist } else { pos.depth },
                 ..pos
             },
             Direction::Up(dist) => Position {
-                depth: pos.depth - dist,
+                aim: if part == 2 { pos.aim - dist } else { 0 },
+                depth: if part == 1 { pos.depth - dist } else { pos.depth },
                 ..pos
             },
             Direction::Down(dist) => Position {
-                depth: pos.depth + dist,
-                ..pos
-            }
-        })
-        .answer()
-}
-
-fn part_two() -> u32 {
-    aoc::lines::<Direction>("./data/day2.txt")
-        .iter()
-        .fold(Position::new(), |pos, inst| match inst {
-            Direction::Forward(dist) => Position {
-                distance: pos.distance + dist,
-                depth: pos.depth + pos.aim * dist,
-                ..pos
-            },
-            Direction::Up(dist) => Position {
-                aim: pos.aim - dist,
-                ..pos
-            },
-            Direction::Down(dist) => Position {
-                aim: pos.aim + dist,
+                aim: if part == 2 { pos.aim + dist } else { 0 },
+                depth: if part == 1 { pos.depth + dist } else { pos.depth },
                 ..pos
             }
         })
@@ -42,8 +24,8 @@ fn part_two() -> u32 {
 }
 
 fn main() {
-    println!("Part 1: {}", part_one());
-    println!("Part 2: {}", part_two());
+    println!("Part 1: {}", get_position(1));
+    println!("Part 2: {}", get_position(2));
 }
 
 enum Direction {
