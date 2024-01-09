@@ -6,18 +6,9 @@ fn get_diagnostic_report() -> u32 {
         .iter()
         .map(|row| row[i])
         .sum::<u32>()
-    ).fold(Diagnostic::new(), |acc, col| {
-        if col > half {
-            Diagnostic {
-                gamma: (acc.gamma << 1) | 1,
-                epsilon: acc.epsilon << 1,
-            }
-        } else {
-            Diagnostic {
-                gamma: acc.gamma << 1,
-                epsilon: (acc.epsilon << 1) | 1,
-            }
-        }
+    ).fold(Diagnostic::new(), |acc, col| Diagnostic {
+        gamma: acc.gamma << 1 | !(col > half) as u32,
+        epsilon: acc.epsilon << 1 | (col > half) as u32,
     }).generate_report()
 }
 
