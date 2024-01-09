@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-fn get_final_position() -> u32 {
+fn part_one() -> u32 {
     aoc::lines::<Direction>("./data/day2.txt")
         .iter()
         .fold(Position::new(), |pos, inst| match inst {
@@ -20,8 +20,30 @@ fn get_final_position() -> u32 {
         .answer()
 }
 
+fn part_two() -> u32 {
+    aoc::lines::<Direction>("./data/day2.txt")
+        .iter()
+        .fold(Position::new(), |pos, inst| match inst {
+            Direction::Forward(dist) => Position {
+                distance: pos.distance + dist,
+                depth: pos.depth + pos.aim * dist,
+                ..pos
+            },
+            Direction::Up(dist) => Position {
+                aim: pos.aim - dist,
+                ..pos
+            },
+            Direction::Down(dist) => Position {
+                aim: pos.aim + dist,
+                ..pos
+            }
+        })
+        .answer()
+}
+
 fn main() {
-    println!("Part 1: {}", get_final_position());
+    println!("Part 1: {}", part_one());
+    println!("Part 2: {}", part_two());
 }
 
 enum Direction {
@@ -48,11 +70,12 @@ impl FromStr for Direction {
 struct Position {
     distance: u32,
     depth: u32,
+    aim: u32,
 }
 
 impl Position {
     fn new() -> Self {
-        Position { distance: 0, depth: 0 }
+        Position { distance: 0, depth: 0, aim: 0 }
     }
 
     fn answer(&self) -> u32 {
