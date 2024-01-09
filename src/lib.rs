@@ -1,23 +1,35 @@
 use std::str::FromStr;
 
-pub fn read_lines<T>(path: &str) -> Vec<T>
+pub fn lines<T>(path: &str) -> Vec<T>
 where 
     T: FromStr
 {
     std::fs::read_to_string(path)
-        .expect("Something went wrong reading a file")
+        .expect("Something went wrong reading the file")
         .lines()
         .filter_map(|line| line.parse::<T>().ok())
         .collect()
 }
 
-pub fn read_chars<T, F>(path: &str, f: F) -> Vec<Vec<T>>
+pub fn chars<T, F>(path: &str, f: F) -> Vec<T> 
 where 
     T: FromStr,
     F: Fn(char) -> Option<T>
 {
     std::fs::read_to_string(path)
-        .expect("Something went wrong reading a file")
+        .expect("Something went wrong reading the file")
+        .chars()
+        .filter_map(|c| f(c))
+        .collect()
+}
+
+pub fn chars_per_line<T, F>(path: &str, f: F) -> Vec<Vec<T>>
+where 
+    T: FromStr,
+    F: Fn(char) -> Option<T>
+{
+    std::fs::read_to_string(path)
+        .expect("Something went wrong reading the file")
         .lines()
         .map(|line| line
             .chars()

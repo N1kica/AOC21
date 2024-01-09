@@ -1,5 +1,5 @@
 fn get_diagnostic_report() -> u32 {
-    let contents = aoc::read_chars("./data/day3.txt", |c| char::to_digit(c, 2));
+    let contents = aoc::chars_per_line("./data/day3.txt", |c| char::to_digit(c, 2));
     let half = (contents.len() / 2) as u32;
 
     (0..contents[0].len()).map(|i| contents

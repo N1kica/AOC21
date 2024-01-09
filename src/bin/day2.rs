@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 fn get_final_position() -> u32 {
-    aoc::read_lines::<Direction>("./data/day2.txt")
+    aoc::lines::<Direction>("./data/day2.txt")
         .iter()
         .fold(Position::new(), |pos, inst| match inst {
             Direction::Forward(dist) => Position {
