@@ -6,16 +6,16 @@ fn get_position(part: usize) -> u32 {
         .fold(Position::new(), |pos, inst| match inst {
             Direction::Forward(dist) => Position {
                 distance: pos.distance + dist,
-                depth: pos.depth + pos.aim * dist * (part == 2) as u32, // only for part 2
+                depth: pos.depth + pos.aim * dist * (part == 2) as u32, // only for p2
                 ..pos
             },
             Direction::Up(dist) => Position {
-                depth: pos.depth - dist * (part == 1) as u32, // only for part 1
+                depth: pos.depth - dist * (part == 1) as u32, // only for p1
                 aim: pos.aim - dist,
                 ..pos
             },
             Direction::Down(dist) => Position {
-                depth: pos.depth + dist * (part == 1) as u32, // only for part 1
+                depth: pos.depth + dist * (part == 1) as u32, // only for p1
                 aim: pos.aim + dist,
                 ..pos
             }
