@@ -11,7 +11,7 @@ where
         .collect()
 }
 
-pub fn chars<T, F>(path: &str, f: F) -> Vec<T> 
+pub fn chars<T, F>(path: &str, f: F) -> Vec<T>
 where 
     F: Fn(char) -> Option<T>
 {
