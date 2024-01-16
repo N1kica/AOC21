@@ -36,3 +36,15 @@ where
             .collect())
         .collect()
 }
+
+pub fn split<T>(path: &str, pat: &str) -> Vec<T>
+where
+    T: FromStr
+{
+    std::fs::read_to_string(path)
+        .expect("Something went wrong reading the file")
+        .split(pat)
+        .into_iter()
+        .filter_map(|c| c.parse::<T>().ok())
+        .collect()
+}
