@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use itertools::Itertools;
 
 pub fn lines<T>(path: &str) -> Vec<T>
 where 
@@ -47,4 +48,23 @@ where
         .into_iter()
         .filter_map(|c| c.parse::<T>().ok())
         .collect()
+}
+
+pub fn boards<T>(path: &str, size: usize) -> Vec<Vec<Vec<T>>>
+where
+    T: FromStr
+{
+    std::fs::read_to_string(path)
+        .expect("Something went wrong reading the file")
+        .lines()
+        .filter(|&line| !line.is_empty())
+        .chunks(size)
+        .into_iter()
+        .map(|chunk| chunk.map(|line| line
+            .split_whitespace()
+            .into_iter()
+            .filter_map(|x| x.parse::<T>().ok()).collect_vec())
+            .collect_vec()
+        )
+        .collect_vec()
 }
